@@ -3,40 +3,41 @@
 // PA2 - Problem 1
 // MinotaursBirthdayParty.java
 
-import java.util.Random;
 import java.util.Set;
+import java.util.Random;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MinotaursBirthdayParty extends Thread {
-  // member variables
+  // public member variables
   public static int numGuests;
-  private int currentGuestNumber;
-  private AtomicBoolean hasEatenCupcake = new AtomicBoolean(false);
-  // private AtomicBoolean hasEatenCupcake = new AtomicBoolean(false);
-  private AtomicBoolean selected = new AtomicBoolean(false);
   public static int numOfIterationsRequired = 0;
-  public static AtomicInteger counter = new AtomicInteger(1);
-  public static AtomicBoolean cupcake = new AtomicBoolean(true);
   public static ReentrantLock lock = new ReentrantLock();
   public static Set<Integer> set = new HashSet<Integer>();
-  
-  // static boolean[] hasEatenCupcake = new boolean[numGuests];
-  // static boolean[] isSelected = new boolean[100];
+  public static AtomicInteger counter = new AtomicInteger(1);  
+  public static AtomicBoolean cupcake = new AtomicBoolean(true);
 
+  // private member variables
+  private int currentGuestNumber;
+  private AtomicBoolean selected = new AtomicBoolean(false);
+  private AtomicBoolean hasEatenCupcake = new AtomicBoolean(false);
+
+  // constructor for setting the guest's number
   MinotaursBirthdayParty(int guestNumber) {
     this.currentGuestNumber = guestNumber;
   }
 
-  // run method
+  // Guest shows up to the Minotaur's birthday party
+  // and attempts to get in the Labyrinth.
   public void run() {
     while (counter.get() < numGuests) {
       tryToEnterLabyrinth();
     }
   }  
 
+  // Guest is selected to enter Minotaur's labyrinth.
   public void tryToEnterLabyrinth() {
     if (this.selected.get() == true) {
       this.selected.set(false);
@@ -45,8 +46,7 @@ public class MinotaursBirthdayParty extends Thread {
   }
     
   // The guest enters Minotaur's Labyrinth
-  public synchronized void enterLabyrinth() {
-    
+  public void enterLabyrinth() {
     lock.lock();
     try {
       // set.add(this.currentGuestNumber);
@@ -84,20 +84,14 @@ public class MinotaursBirthdayParty extends Thread {
     System.out.println("Loading...");
     // Minotaur picks random guests for labyrinth
     while (counter.get() < numGuests) {
-      
       int randomGuest = random.nextInt(numGuests);
-      
       minotaursGuests[randomGuest].selected.set(true);
-      // isSelected[randomGuest] = false;
-      // System.out.println("Guest Selected By Minotaur: " + randomGuest);
-      // minotaursGuests[randomGuest].enterLabyrinth();
       
       // join threads/guests
       if (counter.get() == numGuests) {
         for (int guestNumber = 0; guestNumber < numGuests; ++guestNumber) {
           try {
             minotaursGuests[guestNumber].join();
-            // System.out.println(guestNumber);
           } catch(Exception e) { e.printStackTrace(); }
         }
       }
@@ -106,9 +100,10 @@ public class MinotaursBirthdayParty extends Thread {
     System.out.println("All " + counter + " guests have made it through the Minotaur's Labyrinth!");
     long endTime = System.currentTimeMillis();
     System.out.println("Execution Time: " + (endTime - startTime) + "ms");
+    
+    // Test set to ensure all guests made it through the labyrinth.
     // for (int item : set) {
     //   System.out.println(item);
-    // }
-
+    // 
   }
 }
