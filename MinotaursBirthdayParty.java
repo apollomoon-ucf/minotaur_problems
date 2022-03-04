@@ -6,9 +6,10 @@
 import java.util.Set;
 import java.util.Random;
 import java.util.HashSet;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 public class MinotaursBirthdayParty extends Thread {
   // public member variables
