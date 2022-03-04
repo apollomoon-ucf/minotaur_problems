@@ -10,9 +10,12 @@ UCF
 
 ## Instructions
 
-Build Program: javac MinotaursBirthdayParty.java
+Build Minotaur's Crystal Vase Program: javac MinotaursCrystalVase.java
+Build Minotaur's Birthday Party Program: javac MinotaursBirthdayParty.java
 
-Run Program And Output To File: java MinotaursBirthdayParty > MinotaursBirthdayPartyResults.txt
+Run Program And Output To File:
+java MinotaursCrystalVase > MinotaursCrystalVaseResults.txt
+java MinotaursBirthdayParty > MinotaursBirthdayPartyResults.txt
 
 ## Program Summary
 
