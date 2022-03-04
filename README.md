@@ -21,6 +21,7 @@ Build Minotaur's Birthday Party Program:
 Run Program And Output To File:
 
 > java MinotaursCrystalVase > MinotaursCrystalVaseResults.txt
+
 > java MinotaursBirthdayParty > MinotaursBirthdayPartyResults.txt
 
 ## Program Summary
