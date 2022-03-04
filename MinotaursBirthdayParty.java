@@ -82,7 +82,11 @@ public class MinotaursBirthdayParty extends Thread {
       minotaursGuests[guestNumber] = new MinotaursBirthdayParty(guestNumber);
       minotaursGuests[guestNumber].start();
     }
-    System.out.println("Loading...");
+    System.out.println("Minotaur's Birthday Party Has Begun!! :)");
+    System.out.println(".....");
+    System.out.println("Guests are entering Minotaur's Labyrinth...");
+    System.out.println("");
+    System.out.println(".....");
     // Minotaur picks random guests for labyrinth
     while (counter.get() < numGuests) {
       int randomGuest = random.nextInt(numGuests);
@@ -97,8 +101,8 @@ public class MinotaursBirthdayParty extends Thread {
         }
       }
     }
-    System.out.println("Loading Complete!");
-    System.out.println("All " + counter + " guests have made it through the Minotaur's Labyrinth!");
+    System.out.println("The party is over! I hope all of the guests enjoyed their cupcakes! yummm");
+    System.out.println("\nAll " + counter + " guests have made it through the Minotaur's Labyrinth!\n");
     long endTime = System.currentTimeMillis();
     System.out.println("Execution Time: " + (endTime - startTime) + "ms");
     

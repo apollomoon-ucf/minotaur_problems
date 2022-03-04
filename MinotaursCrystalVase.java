@@ -46,26 +46,22 @@ public class MinotaursCrystalVase extends Thread {
   } 
 
   // Switch the sign to "Busy" on the Crystal Vase Showroom door
-  public void locker() {
-    // System.out.println(this.currentGuestNumber);
+  public void changeSignToBusy() {
     while (AVAILABLE) {
-      // System.out.println("Door is now unlocked");
-      while (!isDoorUnlocked.get()) {
-      };
-      // System.out.println(isDoorUnlocked);
+      while (!isDoorUnlocked.get()) {};
       if (isDoorUnlocked.getAndSet(BUSY)) {
-        // System.out.println("Door is now locked");
+        // System.out.println("Enter the room, change the sign to BUSY.");
         return; 
       } else {
-        // System.out.println("Backoff bruh");
+        // System.out.println("Wait for a bit before looking at sign again..");
         backoff();
       }
     }
   }
   // Switch the sign to "Available" on the Crystal Vase Showroom door
-  public void unlocker() {
+  public void changeSignToAvailable() {
     isDoorUnlocked.set(AVAILABLE);
-    // System.out.println("Door is now unlocked");
+    // System.out.println("Leave the room, change the sign to AVAILABLE.");
   }
 
   public boolean isCrystalVaseShowroomOpen() {
@@ -91,15 +87,15 @@ public class MinotaursCrystalVase extends Thread {
   // The guest enters Minotaur's Crystal Vase Showroom
   public void enterCrystalVaseShowroom() {
     // Switch sign on the door to "Busy"
-    this.locker();
+    this.changeSignToBusy();
     try {
-      // set.add(this.currentGuestNumber);
-      // System.out.println("Guest in showroom: " + currentGuestNumber);
+      set.add(this.currentGuestNumber);
+      // System.out.println("Guest " + currentGuestNumber + " in the Crystal Vase Showroom.");
     } catch(Exception e) {
         e.printStackTrace();
     } finally {
         // Switch sign on the door to "Available"
-        this.unlocker();
+        this.changeSignToAvailable();
     }
   }
   
@@ -140,9 +136,7 @@ public class MinotaursCrystalVase extends Thread {
       } catch(Exception e) { e.printStackTrace(); }
     }
     
-    
     System.out.println("Minotaur's Crystal Vase Showroom Is Now Closed For The Day :) \n-------------------------------------------------------------\n\nThanks For Stopping By!!\n");
-    // System.out.println("------------------------------------------------------------\n");
     
     long endTime = System.currentTimeMillis();
     System.out.println("Total time open for business: " + (endTime - startTime) + "ms");
