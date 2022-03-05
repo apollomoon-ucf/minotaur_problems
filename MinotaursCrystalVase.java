@@ -11,10 +11,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MinotaursCrystalVase extends Thread {
   // constants
   public static final Boolean BUSY = false;
+  // Showroom operating hours (ms)
+  public static final int openDuration = 3000;
   public static final Boolean AVAILABLE = true;
 
   // public member variables
-  public static int numGuests;
+  public static int numGuests = 100;
   public static Boolean isOpenForBusiness = true;
   public static Set<Integer> set = new HashSet<Integer>();  
 
@@ -23,7 +25,7 @@ public class MinotaursCrystalVase extends Thread {
   private int currentGuestNumber;
   private static final int MIN_DELAY = 10;
   private static final int MAX_DELAY = 1000;
-  private static AtomicBoolean isDoorUnlocked = new AtomicBoolean(true);
+  private static AtomicBoolean readSignOnTheDoor = new AtomicBoolean(true);
 
   // constructor for setting the guest's number
   MinotaursCrystalVase(int guestNumber) {
@@ -48,8 +50,8 @@ public class MinotaursCrystalVase extends Thread {
   // Switch the sign to "Busy" on the Crystal Vase Showroom door
   public void changeSignToBusy() {
     while (AVAILABLE) {
-      while (!isDoorUnlocked.get()) {};
-      if (isDoorUnlocked.getAndSet(BUSY)) {
+      while (!readSignOnTheDoor.get()) {};
+      if (readSignOnTheDoor.getAndSet(BUSY)) {
         // System.out.println("Enter the room, change the sign to BUSY.");
         return; 
       } else {
@@ -60,7 +62,7 @@ public class MinotaursCrystalVase extends Thread {
   }
   // Switch the sign to "Available" on the Crystal Vase Showroom door
   public void changeSignToAvailable() {
-    isDoorUnlocked.set(AVAILABLE);
+    readSignOnTheDoor.set(AVAILABLE);
     // System.out.println("Leave the room, change the sign to AVAILABLE.");
   }
 
@@ -72,20 +74,20 @@ public class MinotaursCrystalVase extends Thread {
   // crystal vase showroom and attempt to get in
   public void run() {
     while (isCrystalVaseShowroomOpen()) {
-      tryToEnterCrystalVaseShowroom();
+      lookAtSignOnCrystalVaseShowroomDoor();
     }
   }  
 
   // Guest sees the sign on the door says "Available"
-  // and attempts to reach for the door
-  public void tryToEnterCrystalVaseShowroom() {
-    if (isDoorUnlocked.get() == AVAILABLE) {
-      enterCrystalVaseShowroom();
+  // and attempts to change the sign
+  public void lookAtSignOnCrystalVaseShowroomDoor() {
+    if (readSignOnTheDoor.get() == AVAILABLE) {
+      tryToEnterCrystalVaseShowroom();
     }
   }
     
-  // The guest enters Minotaur's Crystal Vase Showroom
-  public void enterCrystalVaseShowroom() {
+  // The guest trys to enter Minotaur's Crystal Vase Showroom
+  public void tryToEnterCrystalVaseShowroom() {
     // Switch sign on the door to "Busy"
     this.changeSignToBusy();
     try {
@@ -101,14 +103,9 @@ public class MinotaursCrystalVase extends Thread {
   
   // main method
   public static void main(String[] args) {
-    // operating hours
-    int openDuration = 3000;
-    int timeNeededForClosing = 1000;
-    long operatingHours = System.currentTimeMillis() + openDuration + timeNeededForClosing;
+    long operatingHours = System.currentTimeMillis() + openDuration;
     // start time
     long startTime = System.currentTimeMillis();
-    // number of threads/guests
-    numGuests = 100;
     MinotaursCrystalVase[] minotaursGuests = new MinotaursCrystalVase[numGuests];
     System.out.println("\nMinotaur's Crystal Vase Showroom Is Now Open For Business!!!!");
     System.out.println("-------------------------------------------------------------\n");
@@ -124,11 +121,12 @@ public class MinotaursCrystalVase extends Thread {
     // let guests in
     while (System.currentTimeMillis() < operatingHours) {
       // business is open
-      if (operatingHours - System.currentTimeMillis() <= timeNeededForClosing && isOpenForBusiness == true) {
-        System.out.println("\nSTATUS -> Closing the showroom...\n");
+      if (System.currentTimeMillis() <= operatingHours && isOpenForBusiness == true) {
+        // alert the guests that the showroom is closing
         isOpenForBusiness = false;
       }
     }
+    System.out.println("\nSTATUS -> Closing the showroom...\n");
     // join threads/guests
     for (int guestNumber = 0; guestNumber < numGuests; ++guestNumber) {
       try {
@@ -139,7 +137,7 @@ public class MinotaursCrystalVase extends Thread {
     System.out.println("Minotaur's Crystal Vase Showroom Is Now Closed For The Day :) \n-------------------------------------------------------------\n\nThanks For Stopping By!!\n");
     
     long endTime = System.currentTimeMillis();
-    System.out.println("Total time open for business: " + (endTime - startTime) + "ms");
+    System.out.println("Total time: " + (endTime - startTime) + "ms");
     
     // Test set to ensure all guests made it through the labyrinth.
     // for (int item : set) {

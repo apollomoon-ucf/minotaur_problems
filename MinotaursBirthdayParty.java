@@ -10,10 +10,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class MinotaursBirthdayParty extends Thread {
   // public member variables
-  public static int numGuests;
+  public static int numGuests = 100;
   public static int numOfIterationsRequired = 0;
   public static ReentrantLock lock = new ReentrantLock();
   public static Set<Integer> set = new HashSet<Integer>();
@@ -54,6 +53,7 @@ public class MinotaursBirthdayParty extends Thread {
       if (this.currentGuestNumber == 0 && cupcake.get() == false) {
         counter.getAndIncrement();
         cupcake.set(true);
+        // ++numOfIterationsRequired;
         // System.out.println("The captain increments the count and requests a new yummy cupcake!"); 
       } else if (this.hasEatenCupcake.get() == false && cupcake.get() == true && this.currentGuestNumber != 0) {
         this.hasEatenCupcake.set(true);
@@ -73,7 +73,7 @@ public class MinotaursBirthdayParty extends Thread {
     // start time
     long startTime = System.currentTimeMillis();
     // number of threads/guests
-    numGuests = 100;
+    // numGuests = 100;
     Random random = new Random();
     MinotaursBirthdayParty[] minotaursGuests = new MinotaursBirthdayParty[numGuests];
 
@@ -82,7 +82,7 @@ public class MinotaursBirthdayParty extends Thread {
       minotaursGuests[guestNumber] = new MinotaursBirthdayParty(guestNumber);
       minotaursGuests[guestNumber].start();
     }
-    System.out.println("Minotaur's Birthday Party Has Begun!! :)");
+    System.out.println("\nMinotaur's Birthday Party Has Begun!! :)");
     System.out.println(".....");
     System.out.println("Guests are entering Minotaur's Labyrinth...");
     System.out.println("");
@@ -102,9 +102,10 @@ public class MinotaursBirthdayParty extends Thread {
       }
     }
     System.out.println("The party is over! I hope all of the guests enjoyed their cupcakes! yummm");
-    System.out.println("\nAll " + counter + " guests have made it through the Minotaur's Labyrinth!\n");
+    System.out.println("\nAll " + counter + " guests have made it through Minotaur's Labyrinth!\n");
     long endTime = System.currentTimeMillis();
     System.out.println("Execution Time: " + (endTime - startTime) + "ms");
+    // System.out.println(numOfIterationsRequired);
     
     // Test set to ensure all guests made it through the labyrinth.
     // for (int item : set) {
