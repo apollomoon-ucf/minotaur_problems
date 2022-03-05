@@ -4,9 +4,7 @@
 
 Programming Assignment 2
 
-Minotaur Problems
-
-(Minotaur's Birthday Party and Minotaur's Crystal Vase)
+Minotaur Problems - Minotaur's Birthday Party and Minotaur's Crystal Vase
 
 Brian Moon
 
