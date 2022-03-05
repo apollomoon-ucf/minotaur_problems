@@ -14,13 +14,15 @@ Build Minotaur's Crystal Vase Program:
 
 > javac MinotaursCrystalVase.java
 
+Run Program And Output To File:
+
+> java MinotaursCrystalVase > MinotaursCrystalVaseResults.txt
+
 Build Minotaur's Birthday Party Program:
 
 > javac MinotaursBirthdayParty.java
 
 Run Program And Output To File:
-
-> java MinotaursCrystalVase > MinotaursCrystalVaseResults.txt
 
 > java MinotaursBirthdayParty > MinotaursBirthdayPartyResults.txt
 
