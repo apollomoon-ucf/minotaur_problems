@@ -1,0 +1,11 @@
+
+Minotaur's Birthday Party Has Begun!! :)
+.....
+Guests are entering Minotaur's Labyrinth...
+
+.....
+The party is over! I hope all of the guests enjoyed their cupcakes! yummm
+
+All 100 guests have made it through Minotaur's Labyrinth!
+
+Execution Time: 852ms
